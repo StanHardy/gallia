@@ -6,7 +6,7 @@ from argparse import Namespace
 
 from gallia.services.xcp import XCPService
 from gallia.udscan.core import Scanner, load_transport
-from gallia.utils import catch_and_log_exception
+from gallia.utils import catch_and_exception
 
 
 class TestXCP(Scanner):
@@ -20,7 +20,7 @@ class TestXCP(Scanner):
         await transport.connect(None)
         service = XCPService(transport)
 
-        await catch_and_log_exception(self.logger, service.connect)
-        await catch_and_log_exception(self.logger, service.get_status)
-        await catch_and_log_exception(self.logger, service.get_comm_mode_info)
-        await catch_and_log_exception(self.logger, service.disconnect)
+        await catch_and_exception(self.logger, service.connect)
+        await catch_and_exception(self.logger, service.get_status)
+        await catch_and_exception(self.logger, service.get_comm_mode_info)
+        await catch_and_exception(self.logger, service.disconnect)

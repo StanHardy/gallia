@@ -10,10 +10,10 @@ from pathlib import Path
 from sys import stdout
 from typing import TYPE_CHECKING, Any, Callable, Optional, Sequence, Union
 from urllib.parse import urlparse
+import logging
 
 import aiofiles
 
-from gallia.penlog import Logger
 from gallia.uds.core.service import NegativeResponse
 from gallia.uds.core.utils import bytes_repr, int_repr
 
@@ -166,8 +166,7 @@ class ParseSkips(Action):
             raise ArgumentError(self, "The argument is malformed!") from e
 
 
-async def catch_and_log_exception(
-    logger: Logger,
+async def catch_and_exception(
     func: Callable,
     *args: Any,
     **kwargs: Any,
@@ -182,7 +181,7 @@ async def catch_and_log_exception(
     try:
         return await func(*args, **kwargs)
     except Exception as e:
-        logger.log_error(f"func {func.__name__} failed: {repr(e)}")
+        logging.error(f"func {func.__name__} failed: {repr(e)}")
 
 
 class ANSIEscapes:
